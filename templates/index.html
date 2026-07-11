@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Shubh - AI Video Generator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0b0f19; color: #ffffff; padding: 20px; }
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { color: #00f2fe; font-size: 2.8rem; margin-bottom: 10px; font-weight: 800; letter-spacing: 1px; }
+        header h1 span { color: #ff007f; }
+        header p { color: #8a99ad; font-size: 1.1rem; }
+        .main-container { display: flex; flex-wrap: wrap; gap: 20px; max-width: 1400px; margin: 0 auto; }
+        .card { background: #131a2c; border: 1px solid #222f47; border-radius: 12px; padding: 20px; flex: 1; min-width: 300px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .upload-box { border: 2px dashed #00f2fe; border-radius: 8px; padding: 40px 20px; text-align: center; cursor: pointer; background: #1a233a; display: block; }
+        .upload-box:hover { background: #222f47; border-color: #ff007f; }
+        input[type="file"] { display: none; }
+        textarea { width: 100%; height: 120px; background: #1a233a; border: 1px solid #222f47; border-radius: 8px; color: white; padding: 10px; resize: none; margin-top: 15px; font-size: 1rem; }
+        textarea:focus { outline: 2px solid #00f2fe; }
+        .btn-generate { width: 100%; background: linear-gradient(45deg, #ff007f, #00f2fe); color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4); }
+        .effects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .effect-btn { background: #1a233a; border: 1px solid #222f47; color: white; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 500; transition: 0.2s; }
+        .effect-btn:hover { border-color: #00f2fe; background: #222f47; color: #00f2fe; }
+        .output-box { width: 100%; margin-top: 15px; display: none; text-align: center; }
+        .output-box video { width: 100%; border-radius: 8px; border: 1px solid #00f2fe; }
+        .ads-container { background: #070a12; border: 1px dashed #ff9900; border-radius: 8px; padding: 20px; text-align: center; color: #ff9900; margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Edit <span>Shubh</span> 🤖</h1>
+        <p>Next-Generation AI Video Editing Platform</p>
+    </header>
+    <div class="main-container">
+        <div class="card">
+            <h2>1. Video Upload</h2>
+            <p style="color: #8a99ad; margin-bottom: 15px;">Jis video ko edit karna hai, select karein</p>
+            <label class="upload-box" for="videoFile">
+                <span style="font-size: 2.5rem;">📁</span>
+                <p>Click karein ya File Drop karein</p>
+                <input type="file" id="videoFile" accept="video/*">
+            </label>
+            <div id="file-name" style="margin-top: 10px; color: #00f2fe; text-align: center; font-weight: bold;"></div>
+        </div>
+        <div class="card">
+            <h2>2. AI Magic Prompt</h2>
+            <p style="color: #8a99ad;">AI ko commands dein</p>
+            <textarea id="promptText" placeholder="Example: Is video ko cinematic 4K look do..."></textarea>
+            <button class="btn-generate" onclick="generateVideo()">🎬 AI Video Generate Karein</button>
+            <div id="outputContainer" class="output-box">
+                <h3 style="color: #00f2fe; margin-bottom: 10px; margin-top: 15px;">🎉 Edit Shubh AI Result:</h3>
+                <video id="outputVideo" controls></video>
+            </div>
+        </div>
+        <div class="card">
+            <h2>3. Quick Pro Effects</h2>
+            <div class="effects-grid">
+                <button class="effect-btn" onclick="setPrompt('Is video ko ekdum Neon Cyberpunk aesthetic look mein badal do.')">✨ Cyberpunk Style</button>
+                <button class="effect-btn" onclick="setPrompt('Is video ko 4K Hollywood cinematic color grading do.')">🎥 4K Cinematic</button>
+                <button class="effect-btn" onclick="setPrompt('Is video ko 3D Japanese Anime cartoon style mein convert karo.')">💥 Anime Filter</button>
+                <button class="effect-btn" onclick="setPrompt('Is video ka background noise saaf karke trending lofi music add karo.')">🎵 Auto BG Music</button>
+            </div>
+            <div class="ads-container">
+                [ Google AdSense Ads Slot ]<br>
+                <span style="font-size: 0.8rem; font-weight: normal; color: #8a99ad;">Yahan Edit Shubh se aapki kamai (Earning) dikhegi</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('videoFile').addEventListener('change', function(e) {
+            let fileName = e.target.files[0] ? e.target.files[0].name : "";
+            document.getElementById('file-name').innerText = "📁 Selected: " + fileName;
+        });
+         Bark = text => document.getElementById('promptText').value = text;
+        function setPrompt(text) { document.getElementById('promptText').value = text; }
+        async function generateVideo() {
+            let prompt = document.getElementById('promptText').value;
+            if(!prompt) { alert("Bhai, pehle AI ko kuch prompt toh likh kar do!"); return; }
+            alert("Edit Shubh AI kaam par lag gaya hai! 5-10 seconds rukiye...");
+            let formData = new FormData();
+            formData.append('prompt', prompt);
+            try {
+                let response = await fetch('/generate-video', { method: 'POST', body: formData });
+                let data = await response.json();
+                if(data.success) {
+                    document.getElementById('outputContainer').style.display = 'block';
+                    document.getElementById('outputVideo').src = data.video_url;
+                    document.getElementById('outputVideo').play();
+                } else { alert("Kuch error aaya bhai: " + data.error); }
+            } catch(err) { alert("Server connect nahi ho pa raha. Pehle Python file chalao."); }
+        }
+    </script>
+</body>
+</html>
