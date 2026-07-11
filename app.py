@@ -4,7 +4,9 @@ import urllib.request
 from werkzeug.utils import secure_filename
 import numpy as np
 import cv2
-from moviepy.editor import VideoFileClip, AudioFileClip, CompositeAudioClip
+from moviepy.video.io.VideoFileClip import VideoFileClip
+from moviepy.audio.io.AudioFileClip import AudioFileClip
+from moviepy.audio.AudioClip import CompositeAudioClip
 
 app = Flask(__name__)
 
