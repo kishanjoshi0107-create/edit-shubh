@@ -1,7 +1,2 @@
-Flask==3.0.2
 moviepy==1.0.3
-decorator==4.4.2
-imageio-ffmpeg==0.4.9
-numpy==1.26.4
-opencv-python-headless==4.9.0.80
 setuptools
