@@ -1,2 +1,0 @@
-[phases.setup]
-nixPkgs = ["ffmpeg", "libGL", "libX11", "libXext"]
