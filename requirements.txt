@@ -1,6 +1,6 @@
-Flask==3.0.2
-moviepy==1.0.3
-opencv-python-headless==4.9.0.80
-numpy==1.26.4
-decorator==5.1.1
-imageio-ffmpeg==0.4.9
+Flask
+moviepy
+decorator
+imageio-ffmpeg
+numpy
+opencv-python-headless
